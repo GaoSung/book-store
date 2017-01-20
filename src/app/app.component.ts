@@ -8,11 +8,20 @@ import {Router, NavigationEnd, Route, ActivatedRoute, ActivatedRouteSnapshot} fr
 })
 export class AppComponent {
 
-  constructor(private router:Router,private route:ActivatedRoute){
+  breadcrumb = [];
+
+  constructor(private router:Router){
     router.events.subscribe(event =>{
       if (event instanceof NavigationEnd) {
-        console.log(this.router.url);
-        console.log(this.route.routeConfig);
+        let root = this.router.routerState.snapshot.root;
+        let child = root.firstChild;
+        this.breadcrumb = [{"link":"/home","text":"首页"}];
+        while (child&&child.url.length>0){
+          if(child.url[0].path!=="home"){
+            this.breadcrumb.push({"link":`/${child.url[0]}`,"text":child.data["title"]});
+          }
+          child = child.firstChild;
+        }
       }
     });
   }

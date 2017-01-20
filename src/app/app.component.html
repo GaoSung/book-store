@@ -5,15 +5,14 @@
         <a href="#"><h3>书店</h3></a>
       </li>
       <li>
-        <a class="active">书架</a>
-        <a>仓库</a>
+        <a routerLinkActive="active" routerLink="/shelf">书架</a>
+        <a routerLinkActive="active" routerLink="/store">仓库</a>
       </li>
     </ul>
   </div>
   <div id="page-content-wrapper">
     <ol class="breadcrumb">
-      <li>首页</li>
-      <li>书架</li>
+      <li *ngFor="let bc of breadcrumb"><a routerLinkActive="active" routerLink="{{bc.link}}">{{bc.text}}</a></li>
     </ol>
     <router-outlet></router-outlet>
   </div>
