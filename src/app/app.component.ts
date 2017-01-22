@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Router, NavigationEnd} from "@angular/router";
+import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -15,20 +15,13 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         let root = this.router.routerState.snapshot.root;
         let child = root.firstChild;
-        while (child&&child.firstChild&&child.url.length>0){
-          child = child.firstChild;
-        }
         let currPath = "";
         this.breadcrumb = [];
-        for (let path of child.pathFromRoot){
-          if(path.url[0]){
-            this.breadcrumb.push({"link":`${currPath}/${path.url[0]}`,"text":path.data["title"]});
-            currPath += `/${path.url[0]}`;
-          }else if(path.data["title"]){
-            this.breadcrumb.push({"link":`${currPath}`,"text":path.data["title"]});
-          }
+        while (child&&(child.url.length>0||child.data["title"])){
+          this.breadcrumb.push({"link":`${currPath}/${child.url[0]}`,"text":child.data["title"]});
+          currPath += `/${child.url[0]}`;
+          child = child.firstChild;
         }
-        console.log(this.breadcrumb);
       }
     });
   }
