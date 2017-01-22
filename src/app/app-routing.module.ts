@@ -15,30 +15,32 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       title: '首页'
-    }
-  },
-  {
-    path: 'shelf',
-    component: BookShelfComponent,
-    data: {
-      title: '书架'
     },
-    children: [
+    children:[
       {
-        path: ':id',
-        component: BookShelfDetailComponent,
+        path: 'shelf',
+        component: BookShelfComponent,
         data: {
-          title: '书架详情'
+          title: '书架'
+        },
+        children: [
+          {
+            path: ':id',
+            component: BookShelfDetailComponent,
+            data: {
+              title: '书架详情'
+            }
+          }
+        ]
+      },
+      {
+        path: 'store',
+        component: BookStoreComponent,
+        data: {
+          title: '仓库'
         }
       }
     ]
-  },
-  {
-    path: 'store',
-    component: BookStoreComponent,
-    data: {
-      title: '仓库'
-    }
   },
   {
     path: '',
